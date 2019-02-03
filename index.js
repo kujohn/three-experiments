@@ -1,14 +1,13 @@
+import * as THREE from 'three'
+import './gltf-loader.js'
+
 let renderer
 let camera
 let scene
 
-let width = window.innerWidth
-let height = window.innerHeight
+let width = window.innerWidth - 40
+let height = window.innerHeight - 40
 
-let model
-
-let mixer
-let clock = new THREE.Clock()
 const app = document.getElementById('app')
 
 const init = () => {
@@ -24,11 +23,9 @@ const init = () => {
 
   const loader = new THREE.GLTFLoader()
   loader.load(
-    'https://uploads.codesandbox.io/uploads/user/cdf06b01-5469-4a87-a256-1cc15b068232/1F9I-test.gltf',
-    g => {
-      const torus = g.scene.children[2]
-      scene.add(torus)
-      model = torus
+    './test.glb',
+    gltf => {
+      scene.add(gltf.scene)
     }
   )
   renderer.render(scene, camera)
