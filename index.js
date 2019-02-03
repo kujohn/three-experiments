@@ -17,7 +17,7 @@ const init = () => {
 
   renderer = new THREE.WebGLRenderer({ antialias: true })
   renderer.setSize(width, height)
-  document.body.appendChild(renderer.domElement)
+  document.getElementById('app').replaceWith(renderer.domElement)
 
   const loader = new THREE.GLTFLoader()
   loader.load(
