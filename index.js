@@ -9,6 +9,7 @@ let model
 
 let mixer
 let clock = new THREE.Clock()
+const app = document.getElementById('app')
 
 const init = () => {
   camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000)
@@ -17,14 +18,15 @@ const init = () => {
 
   renderer = new THREE.WebGLRenderer({ antialias: true })
   renderer.setSize(width, height)
-  document.getElementById('app').replaceWith(renderer.domElement)
+
+  app.innerHTML = ''
+  app.appendChild(renderer.domElement)
 
   const loader = new THREE.GLTFLoader()
   loader.load(
     'https://uploads.codesandbox.io/uploads/user/cdf06b01-5469-4a87-a256-1cc15b068232/1F9I-test.gltf',
     g => {
       const torus = g.scene.children[2]
-      console.log(torus)
       scene.add(torus)
       model = torus
     }
