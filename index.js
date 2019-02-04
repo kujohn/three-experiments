@@ -10,18 +10,20 @@ let height = window.innerHeight - 40
 
 let model
 
+let model2
+
 const app = document.getElementById('app')
 
 const init = () => {
-  camera = new THREE.PerspectiveCamera(45, width / height, 0.25, 30)
+  camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 70)
   scene = new THREE.Scene()
-  camera.position.set(0, 0, 2.7)
+  camera.position.set(0, 0, 4)
 
   renderer = new THREE.WebGLRenderer({ antialias: true })
   renderer.setSize(width, height)
 
-  const light = new THREE.HemisphereLight( 0xbbbbff, 0x444422 );
-  light.position.set( 0, 1, 0 );
+  const light = new THREE.HemisphereLight( 0xffffff, 0x444422 );
+  light.position.set( 0, 10, 0 );
   scene.add( light );
 
   const loader = new THREE.GLTFLoader()
@@ -29,8 +31,19 @@ const init = () => {
     './test.glb',
     gltf => {
       const s = gltf.scene
-      scene.add(s)
       model = s.children[2]
+
+      const w = new THREE.WireframeGeometry(model.geometry)
+      const l = new THREE.LineSegments(w)
+      l.material.depthTest = false;
+      l.material.opacity = 0.25;
+      l.material.transparent = true;
+      model2 = l
+
+      model.material = new THREE.MeshNormalMaterial()
+
+      scene.add(l)
+      scene.add(s)
     }
   )
 
@@ -42,7 +55,8 @@ const init = () => {
 const animate = () => {
   requestAnimationFrame(animate)
   if (model) {
-    model.rotation.x += 0.002
+    model.rotation.y -= 0.01
+    model2.rotation.y += 0.01
   }
   renderer.render(scene, camera)
 }
