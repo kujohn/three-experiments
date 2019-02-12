@@ -38,7 +38,7 @@ const init = () => {
       action = mixer.clipAction(gltf.animations[0])
       action.loop = THREE.LoopPingPong
       action.enabled = true
-      action.timeScale = 1
+      action.timeScale = 3
       action.play()
 
       scene.add(s)
